@@ -55,7 +55,7 @@ import java.io.IOException;
  * ['P', 'K', 'T', 100,  45, 0, 0, 1, 1,  0,  0, 50, 25, 0, 0, 0, 50, 0, 0, 0, 0, 0]
  *
  */
-class Packet {
+public class Packet {
 
     byte power = 0;
     byte angle = 0;
@@ -66,6 +66,8 @@ class Packet {
     byte accelerometer_x = 0;
     byte accelerometer_y = 0;
     byte[] sliders_array = {50, 25, 0, 0, 0, 50, 0, 0, 0};
+
+    public Packet() {}
 
     byte[] toByteArray() {
         // dividing angle by 2 in order to pack it into single byte
@@ -90,64 +92,6 @@ class Packet {
     public static byte[] addRedundantBytes(byte[] arr) {
         //TODO: add a method for adding redundancy bytes
         return arr;
-    }
-
-    public void setJoystickParams(byte power, byte angle, byte rotation) {
-        this.power = power;
-        this.angle = angle;
-        this.rotation = rotation;
-    }
-
-    public void resetMovingParams() {
-        power = 0;
-        angle = 0;
-        rotation = 0;
-        staticTilt = 0;
-        movingTilt = 0;
-        //onOff = 1;
-        accelerometer_x = 0;
-        accelerometer_y = 0;
-    }
-
-    public void stopMoving() {
-        power = 0;
-        angle = 0;
-        rotation = 0;
-    }
-
-    public void setMovingTilt() {
-        resetMovingParams();
-        movingTilt = 1;
-    }
-
-    public void setStaticTilt() {
-        resetMovingParams();
-        staticTilt = 1;
-    }
-
-    public void disableTilt() {
-        staticTilt = 0;
-        movingTilt = 0;
-    }
-
-    public void turnOn() {
-        onOff = 1;
-    }
-
-    public void turnOff() {
-        onOff = 0;
-    }
-
-    public void setAccX(byte x) {
-        this.accelerometer_x = x;
-    }
-
-    public void setAccY(byte y) {
-        this.accelerometer_y = y;
-    }
-
-    public void setSlidersArray(byte[] arr) {
-        System.arraycopy(arr, 0, this.sliders_array, 0, 9);
     }
 
 }

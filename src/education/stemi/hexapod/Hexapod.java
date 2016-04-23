@@ -6,7 +6,7 @@ public class Hexapod {
     private PacketSender packetSender;
 
     String ip;
-    Packet curr_packet;
+    public Packet curr_packet;
 
     public Hexapod() {
         //default IP of ESP8266 chip
@@ -19,6 +19,23 @@ public class Hexapod {
         this.ip = ip;
     }
 
+    public void setIP(String ip) {
+        this.ip = ip;
+    }
+
+    public String getIP() {
+        return ip;
+    }
+
+    public void setJoystickParams(byte power, byte angle) {
+        curr_packet.power = power;
+        curr_packet.angle = angle;
+    }
+
+    public void setJoystickParams(byte rotation) {
+        curr_packet.rotation = rotation;
+    }
+
     public void connect() {
         packetSender = new PacketSender(this);
         new Thread(packetSender).start();
@@ -26,59 +43,112 @@ public class Hexapod {
 
     public void disconnect() {
         packetSender.stop();
+        curr_packet = new Packet();
     }
 
     public void goForward() {
-        curr_packet.stopMoving();
+        stopMoving();
         curr_packet.power = 100;
     }
 
     public void goBackward() {
-        curr_packet.stopMoving();
+        stopMoving();
         curr_packet.power = 100;
         curr_packet.angle = (byte) 180;
     }
 
     public void goLeft() {
-        curr_packet.stopMoving();
+        stopMoving();
         curr_packet.power = 100;
         curr_packet.angle = -90;
     }
 
     public void goRight() {
-        curr_packet.stopMoving();
+        stopMoving();
         curr_packet.power = 100;
         curr_packet.angle = 90;
     }
 
     public void turnLeft() {
-        curr_packet.stopMoving();
+        stopMoving();
         curr_packet.rotation = -100;
     }
 
     public void turnRight() {
-        curr_packet.stopMoving();
+        stopMoving();
         curr_packet.rotation = 100;
     }
 
     public void tiltForward() {
-        curr_packet.setMovingTilt();
+        setMovingTilt();
         curr_packet.accelerometer_x = -30;
     }
 
     public void tiltBackward() {
-        curr_packet.setMovingTilt();
+        setMovingTilt();
         curr_packet.accelerometer_x = 30;
     }
 
     public void tiltLeft() {
-        curr_packet.setMovingTilt();
+        setMovingTilt();
         curr_packet.accelerometer_y = -30;
     }
 
     public void tiltRight() {
-        curr_packet.setMovingTilt();
+        setMovingTilt();
         curr_packet.accelerometer_y = 30;
+    }
+
+    public void stopMoving() {
+        curr_packet.power = 0;
+        curr_packet.angle = 0;
+        curr_packet.rotation = 0;
+    }
+
+    public void turnOn() {
+        curr_packet.onOff = 1;
+    }
+
+    public void turnOff() {
+        curr_packet.onOff = 0;
+    }
+
+    public void resetMovingParams() {
+        curr_packet.power = 0;
+        curr_packet.angle = 0;
+        curr_packet.rotation = 0;
+        curr_packet.staticTilt = 0;
+        curr_packet.movingTilt = 0;
+        curr_packet.onOff = 1;
+        curr_packet.accelerometer_x = 0;
+        curr_packet.accelerometer_y = 0;
+    }
+
+    public void setMovingTilt() {
+        disableTilt();
+        curr_packet.movingTilt = 1;
+    }
+
+    public void setStaticTilt() {
+        disableTilt();
+        curr_packet.staticTilt = 1;
+    }
+
+    public void disableTilt() {
+        curr_packet.staticTilt = 0;
+        curr_packet.movingTilt = 0;
+    }
+
+    public void setAccX(byte x) {
+        curr_packet.accelerometer_x = x;
+    }
+
+    public void setAccY(byte y) {
+        curr_packet.accelerometer_y = y;
+    }
+
+    public void setSlidersArray(byte[] arr) {
+        System.arraycopy(arr, 0, curr_packet.sliders_array, 0, 9);
     }
 
 }
