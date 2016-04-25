@@ -58,7 +58,7 @@ import java.io.IOException;
 public class Packet {
 
     byte power = 0;
-    byte angle = 0;
+    int angle = 0;
     byte rotation = 0;
     byte staticTilt = 0;
     byte movingTilt = 0;

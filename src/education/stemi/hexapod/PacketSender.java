@@ -56,7 +56,7 @@ class PacketSender implements Runnable {
         } finally {
             try {
                 logger.info("Connection with the robot closed.");
-                socket.close();
+                if(socket != null) socket.close();
             } catch (IOException e) {
                 logger.warning("IOException while closing the socket");
             }
