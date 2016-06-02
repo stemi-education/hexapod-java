@@ -14,7 +14,7 @@ class PacketSender implements Runnable {
 
     private Hexapod hexapod;
     private Closeable socket;
-    private int sleepingInterval = 200;
+    private int sleepingInterval = 100;
     private boolean connected = true;
 
     PacketSender(Hexapod hexapod) {
@@ -37,7 +37,7 @@ class PacketSender implements Runnable {
 
         try {
             logger.info("Trying to establish a connection with the robot.");
-            socket = new Socket(hexapod.ip, 80);
+            socket = new Socket(hexapod.getIP(), 80);
             OutputStream outputStream = getOutputStream();
             BufferedOutputStream buffOutStream = new BufferedOutputStream(outputStream, 30);
 

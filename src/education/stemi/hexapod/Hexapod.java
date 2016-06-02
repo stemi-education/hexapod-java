@@ -2,15 +2,13 @@ package education.stemi.hexapod;
 
 
 public class Hexapod {
-
-    private PacketSender packetSender;
-
-    String ip;
     public Packet curr_packet;
 
+    private PacketSender packetSender;
+    private int power = 100;
+    private String ip = "192.168.4.1"; //default IP of ESP8266 chip
+
     public Hexapod() {
-        //default IP of ESP8266 chip
-        this.ip = "192.168.4.1";
         this.curr_packet = new Packet();
     }
 
@@ -27,12 +25,26 @@ public class Hexapod {
         return ip;
     }
 
-    public void setJoystickParams(byte power, byte angle) {
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        if(power < 0) {
+            this.power = 0;
+        } else if(power > 100) {
+            this.power = 100;
+        } else {
+            this.power = power;
+        }
+    }
+
+    public void setJoystickParams(int power, int angle) {
         curr_packet.power = power;
         curr_packet.angle = angle;
     }
 
-    public void setJoystickParams(byte rotation) {
+    public void setJoystickParams(int rotation) {
         curr_packet.rotation = rotation;
     }
 
@@ -48,24 +60,24 @@ public class Hexapod {
 
     public void goForward() {
         stopMoving();
-        curr_packet.power = 100;
+        curr_packet.power = power;
     }
 
     public void goBackward() {
         stopMoving();
-        curr_packet.power = 100;
+        curr_packet.power = power;
         curr_packet.angle = 180;
     }
 
     public void goLeft() {
         stopMoving();
-        curr_packet.power = 100;
+        curr_packet.power = power;
         curr_packet.angle = -90;
     }
 
     public void goRight() {
         stopMoving();
-        curr_packet.power = 100;
+        curr_packet.power = power;
         curr_packet.angle = 90;
     }
 
@@ -139,15 +151,25 @@ public class Hexapod {
         curr_packet.movingTilt = 0;
     }
 
-    public void setAccX(byte x) {
+    public void frontalTilt(int x) {
+        setAccX(x);
+        setAccY(0);
+    }
+
+    public void sideTilt(int y) {
+        setAccX(0);
+        setAccY(y);
+    }
+
+    public void setAccX(int x) {
         curr_packet.accelerometer_x = x;
     }
 
-    public void setAccY(byte y) {
+    public void setAccY(int y) {
         curr_packet.accelerometer_y = y;
     }
 
-    public void setSlidersArray(byte[] arr) {
+    public void setSlidersArray(int[] arr) {
         System.arraycopy(arr, 0, curr_packet.sliders_array, 0, 9);
     }
 

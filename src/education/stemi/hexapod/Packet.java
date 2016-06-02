@@ -57,31 +57,32 @@ import java.io.IOException;
  */
 public class Packet {
 
-    byte power = 0;
+    int power = 0;
     int angle = 0;
-    byte rotation = 0;
-    byte staticTilt = 0;
-    byte movingTilt = 0;
-    byte onOff = 1;
-    byte accelerometer_x = 0;
-    byte accelerometer_y = 0;
-    byte[] sliders_array = {50, 25, 0, 0, 0, 50, 0, 0, 0};
+    int rotation = 0;
+    int staticTilt = 0;
+    int movingTilt = 0;
+    int onOff = 1;
+    int accelerometer_x = 0;
+    int accelerometer_y = 0;
+    int[] sliders_array = {50, 25, 0, 0, 0, 50, 0, 0, 0};
+    int duration = 0; //duration measured in 20ms cycles
 
     public Packet() {}
 
     byte[] toByteArray() {
         // dividing angle by 2 in order to pack it into single byte
-        byte[] movingHelperArray = {power, (byte) (angle / 2), rotation, staticTilt,
-                movingTilt, onOff, accelerometer_x, accelerometer_y};
+        byte[] movingHelperArray = {(byte) power, (byte) (angle / 2), (byte) rotation, (byte) staticTilt,
+                (byte) movingTilt, (byte) onOff, (byte) accelerometer_x, (byte) accelerometer_y};
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(23);
 
         try {
             outputStream.write("PKT".getBytes());
             outputStream.write(movingHelperArray);
-            outputStream.write(sliders_array);
-            outputStream.write(0);
-            outputStream.write(0);
+            for(int i = 0; i < sliders_array.length; i++) outputStream.write((byte) sliders_array[i]);
+            outputStream.write((byte) duration / 256);
+            outputStream.write((byte) duration % 256);
         } catch (IOException e) {
             e.printStackTrace();
         }
