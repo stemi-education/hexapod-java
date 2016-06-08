@@ -5,8 +5,10 @@ public class Hexapod {
     public Packet curr_packet;
 
     private PacketSender packetSender;
-    private int power = 100;
-    private String ip = "192.168.4.1"; //default IP of ESP8266 chip
+    private int power = 100;           // default power (speed)
+    private String ip = "192.168.4.1"; // default IP of ESP8266 chip
+    private int ROTATION_TIME = 13;    // seconds for 360 deg. turn
+    private int MAX_SPEED = 13;        // seconds for 1 m
 
     public Hexapod() {
         this.curr_packet = new Packet();
@@ -173,4 +175,85 @@ public class Hexapod {
         System.arraycopy(arr, 0, curr_packet.sliders_array, 0, 9);
     }
 
+    /**
+     * Methods defined below provide the duration of one particular action.
+     * */
+
+    /**
+     * Helper function for sleeping.
+     * @param seconds how many second should the thread sleep
+     */
+    private void threadSleep(float seconds) {
+        try {
+            Thread.sleep((long) (seconds * 1000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void goForward(float meters) {
+        float seconds = meters * MAX_SPEED;
+        curr_packet = new Packet();
+        goForward();
+        threadSleep(seconds);
+    }
+
+    public void goBackward(float meters) {
+        float seconds = meters * MAX_SPEED;
+        curr_packet = new Packet();
+        goBackward();
+        threadSleep(seconds);
+    }
+
+    public void goLeft(float meters) {
+        float seconds = meters * MAX_SPEED;
+        curr_packet = new Packet();
+        goLeft();
+        threadSleep(seconds);
+    }
+
+    public void goRight(float meters) {
+        float seconds = meters * MAX_SPEED;
+        curr_packet = new Packet();
+        goRight();
+        threadSleep(seconds);
+    }
+
+    public void turnLeft(float angle) {
+        float seconds = angle/360 * ROTATION_TIME;
+        curr_packet = new Packet();
+        turnLeft();
+        threadSleep(seconds);
+    }
+
+    public void turnRight(float angle) {
+        float seconds = angle/360 * ROTATION_TIME;
+        curr_packet = new Packet();
+        turnRight();
+        threadSleep(seconds);
+    }
+
+    public void tiltForward(float seconds) {
+        curr_packet = new Packet();
+        tiltForward();
+        threadSleep(seconds);
+    }
+
+    public void tiltBackward(float seconds) {
+        curr_packet = new Packet();
+        tiltBackward();
+        threadSleep(seconds);
+    }
+
+    public void tiltLeft(float seconds) {
+        curr_packet = new Packet();
+        tiltLeft();
+        threadSleep(seconds);
+    }
+
+    public void tiltRight(float seconds) {
+        curr_packet = new Packet();
+        tiltRight();
+        threadSleep(seconds);
+    }
 }
