@@ -57,16 +57,16 @@ import java.io.IOException;
  */
 public class Packet {
 
-    int power = 0;
-    int angle = 0;
-    int rotation = 0;
-    int staticTilt = 0;
-    int movingTilt = 0;
-    int onOff = 1;
-    int accelerometer_x = 0;
-    int accelerometer_y = 0;
-    int[] sliders_array = {50, 25, 0, 0, 0, 50, 0, 0, 0};
-    int duration = 0; //duration measured in 20ms cycles
+    public int power = 0;
+    public int angle = 0;
+    public int rotation = 0;
+    public int staticTilt = 0;
+    public int movingTilt = 0;
+    public int onOff = 1;
+    public int accelerometer_x = 0;
+    public int accelerometer_y = 0;
+    public int[] sliders_array = {50, 25, 0, 0, 0, 50, 0, 0, 0};
+    public int duration = 0; //duration measured in 20ms cycles
 
     public Packet() {}
 
