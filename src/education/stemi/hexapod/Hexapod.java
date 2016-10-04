@@ -171,6 +171,14 @@ public class Hexapod {
         curr_packet.accelerometer_y = y;
     }
 
+    public void setHeight(int height) {
+      curr_packet.sliders_array[0] = height;
+    }
+
+    public void getHeight() {
+        return curr_packet.sliders_array[0];
+    }
+
     public void setSlidersArray(int[] arr) {
         System.arraycopy(arr, 0, curr_packet.sliders_array, 0, 9);
     }
