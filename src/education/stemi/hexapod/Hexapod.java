@@ -172,10 +172,10 @@ public class Hexapod {
     }
 
     public void setHeight(int height) {
-      curr_packet.sliders_array[0] = height;
+        curr_packet.sliders_array[0] = height;
     }
 
-    public void getHeight() {
+    public int getHeight() {
         return curr_packet.sliders_array[0];
     }
 
