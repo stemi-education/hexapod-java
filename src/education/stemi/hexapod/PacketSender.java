@@ -15,7 +15,7 @@ class PacketSender implements Runnable {
     private Hexapod hexapod;
     private Closeable socket;
     private int sleepingInterval = 100;
-    private boolean connected = true;
+    private boolean connected = false;
 
     PacketSender(Hexapod hexapod) {
         logger.setLevel(Level.ALL);
@@ -26,6 +26,11 @@ class PacketSender implements Runnable {
         this(hexapod);
         this.sleepingInterval = sleepingInterval;
     }
+
+    boolean isConnected() {
+        return connected;
+    }
+
 
     void stop() {
         logger.info("Stopping PacketSender...");
@@ -42,6 +47,8 @@ class PacketSender implements Runnable {
             BufferedOutputStream buffOutStream = new BufferedOutputStream(outputStream, 30);
 
             logger.info("Connection established.");
+
+            connected = true;
 
             while(connected) {
                 Thread.sleep(sleepingInterval);
