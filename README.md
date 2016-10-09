@@ -17,19 +17,12 @@ public class GoSTEMI {
         Hexapod hexapod = new Hexapod();
         hexapod.connect();
 
-        //make a square!
+        //make a 25cm x 25cm square!
         try {
-            Thread.sleep(1000);
-            hexapod.goForward();
-
-            Thread.sleep(1000);
-            hexapod.goLeft();
-
-            Thread.sleep(1000);
-            hexapod.goBackward();
-
-            Thread.sleep(1000);
-            hexapod.goRight();            
+            for(int i = 0; i < 4; i++) {
+                hexapod.goForward(0.25f);
+                hexapod.turnLeft(90);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -38,5 +31,10 @@ public class GoSTEMI {
     }
 }
   ```
+## Building the library
+
+Building `.class` and `.jar` files in possible using `ant`. Look at the  `build.xml` in the root directory.
+
+
 
 For more information, visit our [website](https://www.stemi.education/).
