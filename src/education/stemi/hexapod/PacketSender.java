@@ -39,7 +39,6 @@ class PacketSender implements Runnable {
 
     @Override
     public void run() {
-
         try {
             logger.info("Trying to establish a connection with the robot.");
             socket = new Socket(hexapod.getIP(), 80);

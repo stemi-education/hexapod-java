@@ -5,6 +5,8 @@ the STEMI hexapod robot. With this library it is really easy to get started with
 programming apps for STEMI hexapod. It provides unified API for experienced developers,
 and easy-to-use building blocks for programmers that are just starting out.
 
+Note: for compatibility with AppInventor, please use __Oracle Java 7__.
+
 Look at how easy is to make STEMI hexapod move:
 
   ```java

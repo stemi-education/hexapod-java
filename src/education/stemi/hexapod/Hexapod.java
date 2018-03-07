@@ -4,7 +4,7 @@ package education.stemi.hexapod;
 public class Hexapod {
     public Packet curr_packet;
 
-    private static PacketSender packetSender;
+    private PacketSender packetSender;
     private int power = 100;           // default power (speed)
     private String ip = "192.168.4.1"; // default IP of ESP8266 chip
     private int ROTATION_TIME = 13;    // seconds for 360 deg. turn
@@ -12,7 +12,6 @@ public class Hexapod {
 
     public Hexapod() {
         curr_packet = new Packet();
-        packetSender = new PacketSender(this);
     }
 
     public Hexapod(String ip) {
@@ -52,6 +51,7 @@ public class Hexapod {
     }
 
     public void connect() {
+        packetSender = new PacketSender(this);
         new Thread(packetSender).start();
     }
 

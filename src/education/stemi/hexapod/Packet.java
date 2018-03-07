@@ -65,7 +65,7 @@ public class Packet {
     public int onOff = 1;
     public int accelerometer_x = 0;
     public int accelerometer_y = 0;
-    public int[] sliders_array = {50, 25, 0, 0, 0, 50, 0, 0, 0};
+    public int[] sliders_array = {50, 25, 0, 0, 0, 0, 0, 0, 0};
     public int duration = 0; //duration measured in 20ms cycles
 
     public Packet() {}
